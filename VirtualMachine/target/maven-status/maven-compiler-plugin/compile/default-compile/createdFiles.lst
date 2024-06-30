@@ -1,0 +1,4 @@
+com\mycompany\virtualmachine\App.class
+com\mycompany\virtualmachine\PrimaryController.class
+module-info.class
+com\mycompany\virtualmachine\Computer.class
