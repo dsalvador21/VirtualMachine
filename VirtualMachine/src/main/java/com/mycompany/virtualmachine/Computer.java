@@ -1,11 +1,13 @@
 package com.mycompany.virtualmachine;
 
 public class Computer {
-
+    
     String[] ROM;
     int[] RAM;
     int A, D;
     int PC;
+    int MAX_INSTRUCTIONS = 10000;
+    int instructionCount;
 
     public Computer(int ROM_SIZE, int RAM_SIZE) {
         ROM = new String[ROM_SIZE];
@@ -13,6 +15,7 @@ public class Computer {
         A = 0;
         D = 0;
         PC = 0;
+        instructionCount = 0;
     }
 
     public void loadROM(int cell, String instruction) {
@@ -30,7 +33,7 @@ public class Computer {
     public boolean executeInstruction() {
         String instruction = ROM[PC];
 
-        if (instruction == null) {
+        if (instruction == null || instructionCount >= MAX_INSTRUCTIONS) {
             return false;
         }
 
@@ -119,7 +122,8 @@ public class Computer {
             A = Integer.parseInt(instruction, 2);
             PC++;
         }
-
+        
+        instructionCount++;
         return true;
     }
 

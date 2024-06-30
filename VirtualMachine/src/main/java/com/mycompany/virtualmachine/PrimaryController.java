@@ -82,6 +82,9 @@ public class PrimaryController implements Initializable {
 
         memoryTable.setItems(memoryCells);
         memoryTable.setEditable(true);
+
+        execute_instruction.setVisible(false);
+        fast_execution.setVisible(false);
     }
 
     @FXML
@@ -102,6 +105,9 @@ public class PrimaryController implements Initializable {
             instructions.set(i, new InstructionRow(i, computer.ROM[i]));
             i++;
         }
+
+        execute_instruction.setVisible(true);
+        fast_execution.setVisible(true);
 
     }
 
@@ -128,5 +134,9 @@ public class PrimaryController implements Initializable {
     private void fastExecution() {
         while (computer.executeInstruction()) {}
         System.out.println(Arrays.toString(computer.RAM));
+        memoryCells.clear();
+        for (int i = 0; i < computer.RAM.length; i++) {
+            memoryCells.add(new CellRow(i, computer.RAM[i]));
+        }
     }
 }
