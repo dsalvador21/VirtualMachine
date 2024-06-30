@@ -85,6 +85,11 @@ public class PrimaryController implements Initializable {
 
         execute_instruction.setVisible(false);
         fast_execution.setVisible(false);
+        fast_execution.setOnAction(e -> {
+            fastExecution();
+            execute_instruction.setDisable(true);
+            fast_execution.setDisable(true);
+        });
     }
 
     @FXML
@@ -138,5 +143,10 @@ public class PrimaryController implements Initializable {
         for (int i = 0; i < computer.RAM.length; i++) {
             memoryCells.add(new CellRow(i, computer.RAM[i]));
         }
+        markLine(computer.PC);
+        PC.setText(String.valueOf(computer.PC));
+        ARegister.setText(String.valueOf(computer.A));
+        DRegister.setText(String.valueOf(computer.D));
+        //fast_execution.setDisable(true);
     }
 }
