@@ -1,5 +1,7 @@
 package com.mycompany.virtualmachine;
 
+import java.util.Arrays;
+
 public class Computer {
     
     String[] ROM;
