@@ -154,7 +154,8 @@ public class PrimaryController implements Initializable {
         DRegister.setText(String.valueOf(computer.D));
         //fast_execution.setDisable(true);
     }
-
+    
+    @FXML
     private void resetComputer() {
         computer.A = 0;
         computer.D = 0;
