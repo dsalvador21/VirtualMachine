@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="731.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.virtualmachine.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="731.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.virtualmachine.PrimaryController">
    <children>
       <Button fx:id="execute_instruction" layoutX="75.0" layoutY="345.0" mnemonicParsing="false" onAction="#executeInstruction" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Execute instruction" />
       <HBox prefHeight="20.0" prefWidth="600.0">
@@ -67,11 +67,11 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="178.0" layoutY="15.0" text="Máquina Virtual" textFill="WHITE">
+      <Label layoutX="161.0" layoutY="20.0" text="Máquina Virtual" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="53.0" />
          </font>
       </Label>
-      <Button layoutX="622.0" layoutY="557.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset" />
+      <Button layoutX="600.0" layoutY="558.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset Program" />
    </children>
 </AnchorPane>
