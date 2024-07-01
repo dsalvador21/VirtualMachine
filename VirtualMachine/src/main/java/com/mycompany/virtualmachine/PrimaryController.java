@@ -101,6 +101,10 @@ public class PrimaryController implements Initializable {
         );
         File file = fileChooser.showOpenDialog(stage);
 
+        resetComputer();
+        execute_instruction.setDisable(false);
+        fast_execution.setDisable(false);
+
         Scanner scanner = new Scanner(file);
         int i = 0;
 
@@ -137,7 +141,8 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {}
+        while (computer.executeInstruction()) {
+        }
         System.out.println(Arrays.toString(computer.RAM));
         memoryCells.clear();
         for (int i = 0; i < computer.RAM.length; i++) {
@@ -148,5 +153,15 @@ public class PrimaryController implements Initializable {
         ARegister.setText(String.valueOf(computer.A));
         DRegister.setText(String.valueOf(computer.D));
         //fast_execution.setDisable(true);
+    }
+
+    private void resetComputer() {
+        computer.A = 0;
+        computer.D = 0;
+        computer.PC = 0;
+        computer.instructionCount = 0;
+        PC.setText(String.valueOf(computer.PC));
+        ARegister.setText(String.valueOf(computer.A));
+        DRegister.setText(String.valueOf(computer.D));
     }
 }
