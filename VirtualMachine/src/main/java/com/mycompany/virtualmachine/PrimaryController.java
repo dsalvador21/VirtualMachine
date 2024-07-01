@@ -141,9 +141,8 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {
-        }
-        System.out.println(Arrays.toString(computer.RAM));
+        while (computer.executeInstruction()) {}
+        //System.out.println(Arrays.toString(computer.RAM));
         memoryCells.clear();
         for (int i = 0; i < computer.RAM.length; i++) {
             memoryCells.add(new CellRow(i, computer.RAM[i]));
@@ -164,5 +163,9 @@ public class PrimaryController implements Initializable {
         PC.setText(String.valueOf(computer.PC));
         ARegister.setText(String.valueOf(computer.A));
         DRegister.setText(String.valueOf(computer.D));
+        instructionsTable.getSelectionModel().select(-1);
+        instructionsTable.scrollTo(0);
+        execute_instruction.setDisable(false);
+        fast_execution.setDisable(false);
     }
 }
