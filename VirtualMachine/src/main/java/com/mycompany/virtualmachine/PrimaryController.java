@@ -105,6 +105,14 @@ public class PrimaryController implements Initializable {
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
 
+    
+         for (int i = 0; i < computer.ROM.length; i++) {
+            instructions.set(i, new InstructionRow(i, ""));
+        }
+
+        instructionsTable.setItems(instructions);
+        
+
         Scanner scanner = new Scanner(file);
         int i = 0;
 
@@ -167,5 +175,13 @@ public class PrimaryController implements Initializable {
         instructionsTable.scrollTo(0);
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
+    }
+
+    @FXML
+    private void resetRAM(){
+        for (int i = 0; i < computer.RAM.length; i++) {
+            computer.RAM[i] = 0;
+            memoryCells.set(i, new CellRow(i, 0));
+        }
     }
 }

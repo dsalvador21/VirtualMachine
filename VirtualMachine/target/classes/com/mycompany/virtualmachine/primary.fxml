@@ -73,5 +73,6 @@
          </font>
       </Label>
       <Button layoutX="600.0" layoutY="558.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset Program" />
+      <Button layoutX="600.0" layoutY="515.0" mnemonicParsing="false" onAction="#resetRAM" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset RAM" />
    </children>
 </AnchorPane>
