@@ -119,16 +119,17 @@ public class PrimaryController implements Initializable {
             i++;
         }
 
+        instructionsTable.getSelectionModel().select(0);
         execute_instruction.setVisible(true);
         fast_execution.setVisible(true);
     }
 
     @FXML
     private void executeInstruction() {
+        computer.executeInstruction();
         updateROMVisualization(false);
         updateRAMVisualization(false);
         updateRegistersVisualization();
-        computer.executeInstruction();
     }
 
     @FXML
@@ -162,6 +163,7 @@ public class PrimaryController implements Initializable {
 
         if (reset) {
             instructionsTable.scrollTo(0);
+            instructionsTable.getSelectionModel().select(0);
         } else {
             instructionsTable.scrollTo(computer.PC);
             instructionsTable.getSelectionModel().select(computer.PC);
