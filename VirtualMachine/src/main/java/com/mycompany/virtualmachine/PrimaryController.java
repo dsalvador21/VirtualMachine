@@ -125,26 +125,19 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void executeInstruction() {
-        updateRegistersVisualization();
-        markLine(computer.PC);
+        updateROMVisualization(false);
         updateRAMVisualization(false);
+        updateRegistersVisualization();
         computer.executeInstruction();
-    }
-
-    private void markLine(int lineNumber) {
-        instructionsTable.getSelectionModel().clearSelection();
-        instructionsTable.getSelectionModel().select(lineNumber);
-        instructionsTable.scrollTo(lineNumber);
     }
 
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {
-        }
-
+        while (computer.executeInstruction()) {}
+        
+        updateROMVisualization(false);
         updateRAMVisualization(false);
         updateRegistersVisualization();
-        markLine(computer.PC);
         execute_instruction.setDisable(true);
         fast_execution.setDisable(true);
     }
@@ -152,17 +145,27 @@ public class PrimaryController implements Initializable {
     @FXML
     private void resetComputer() {
         computer.resetRegisters();
+        updateROMVisualization(true);
         updateRegistersVisualization();
-        instructionsTable.getSelectionModel().clearSelection();
-        instructionsTable.scrollTo(0);
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
     }
 
-    private void updateRegistersVisualization() {
-        ARegister.setText(String.valueOf(computer.A));
-        DRegister.setText(String.valueOf(computer.D));
-        PC.setText(String.valueOf(computer.PC));
+    @FXML
+    private void resetRAM() {
+        computer.resetRAM();
+        updateRAMVisualization(true);
+    }
+
+    private void updateROMVisualization(boolean reset) {
+        instructionsTable.getSelectionModel().clearSelection();
+
+        if (reset) {
+            instructionsTable.scrollTo(0);
+        } else {
+            instructionsTable.scrollTo(computer.PC);
+            instructionsTable.getSelectionModel().select(computer.PC);
+        }
     }
 
     private void updateRAMVisualization(boolean reset) {
@@ -179,9 +182,9 @@ public class PrimaryController implements Initializable {
         }
     }
 
-    @FXML
-    private void resetRAM() {
-        computer.resetRAM();
-        updateRAMVisualization(true);
+    private void updateRegistersVisualization() {
+        ARegister.setText(String.valueOf(computer.A));
+        DRegister.setText(String.valueOf(computer.D));
+        PC.setText(String.valueOf(computer.PC));
     }
 }

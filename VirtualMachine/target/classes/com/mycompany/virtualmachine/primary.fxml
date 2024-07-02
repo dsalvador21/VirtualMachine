@@ -13,22 +13,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="731.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.virtualmachine.PrimaryController">
    <children>
-      <Button fx:id="execute_instruction" layoutX="75.0" layoutY="345.0" mnemonicParsing="false" onAction="#executeInstruction" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Execute instruction" />
+      <Button fx:id="execute_instruction" layoutX="118.0" layoutY="339.0" mnemonicParsing="false" onAction="#executeInstruction" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Execute instruction" />
       <HBox prefHeight="20.0" prefWidth="600.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </HBox>
-      <TableView fx:id="instructionsTable" layoutX="77.0" layoutY="133.0" prefHeight="200.0" prefWidth="231.0">
+      <TableView fx:id="instructionsTable" layoutX="120.0" layoutY="118.0" prefHeight="200.0" prefWidth="231.0">
         <columns>
           <TableColumn fx:id="numberColumn" prefWidth="75.0" sortable="false" text="Number" />
           <TableColumn fx:id="instructionColumn" prefWidth="134.0" sortable="false" text="Inst" />
         </columns>
       </TableView>
-      <Button fx:id="fast_execution" layoutX="219.0" layoutY="345.0" mnemonicParsing="false" onAction="#fastExecution" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Fast execution" />
-      <VBox layoutX="385.0" layoutY="159.0" prefHeight="200.0" prefWidth="143.0">
+      <Button fx:id="fast_execution" layoutX="262.0" layoutY="339.0" mnemonicParsing="false" onAction="#fastExecution" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Fast execution" />
+      <VBox layoutX="439.0" layoutY="159.0" prefHeight="200.0" prefWidth="143.0">
          <children>
-            <Label text="A Register" textFill="WHITE">
+            <Label text="A Register" textFill="#ae4351">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
@@ -37,7 +37,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </TextField>
-            <Label text="D Register" textFill="WHITE">
+            <Label text="D Register" textFill="#ae4351">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
@@ -46,20 +46,20 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </TextField>
-            <Label text="PC" textFill="WHITE">
+            <Label text="PC" textFill="#ae4351">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
             <TextField fx:id="PC" editable="false" />
          </children>
       </VBox>
-      <TableView fx:id="memoryTable" editable="true" layoutX="75.0" layoutY="392.0" prefHeight="200.0" prefWidth="231.0">
+      <TableView fx:id="memoryTable" editable="true" layoutX="121.0" layoutY="401.0" prefHeight="200.0" prefWidth="231.0">
          <columns>
             <TableColumn fx:id="cellColumn" prefWidth="75.0" sortable="false" text="Cell" />
             <TableColumn fx:id="valueColumn" prefWidth="134.0" sortable="false" text="Value" />
          </columns>
       </TableView>
-      <Button fx:id="load_file" contentDisplay="TOP" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#loadFile" style="-fx-border-color: darkgreen; -fx-background-color: lightgreen;" text="Load file" textFill="WHITE">
+      <Button fx:id="load_file" contentDisplay="TOP" layoutX="31.0" layoutY="120.0" mnemonicParsing="false" onAction="#loadFile" style="-fx-border-color: darkgreen; -fx-background-color: lightgreen;" text="Load file" textFill="WHITE">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -67,12 +67,22 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="161.0" layoutY="20.0" text="Máquina Virtual" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="161.0" layoutY="20.0" text="Máquina Virtual" textAlignment="CENTER" textFill="STEELBLUE">
          <font>
             <Font name="System Bold Italic" size="53.0" />
          </font>
       </Label>
       <Button layoutX="600.0" layoutY="558.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset Program" />
       <Button layoutX="600.0" layoutY="515.0" mnemonicParsing="false" onAction="#resetRAM" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset RAM" />
+      <Label layoutX="126.0" layoutY="98.0" text="ROM" textFill="CORAL" underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="127.0" layoutY="381.0" text="RAM" textFill="CORAL" underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

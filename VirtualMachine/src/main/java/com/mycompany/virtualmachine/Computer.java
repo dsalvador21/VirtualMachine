@@ -24,12 +24,6 @@ public class Computer {
         }
     }
 
-    public void updateCell(int cell, int value) {
-        if (cell >= 0 && cell < RAM.length) {
-            RAM[cell] = value;
-        }
-    }
-
     public boolean executeInstruction() {
         String instruction = ROM[PC];
 
