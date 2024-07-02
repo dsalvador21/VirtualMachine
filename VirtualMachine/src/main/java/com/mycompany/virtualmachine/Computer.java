@@ -127,11 +127,7 @@ public class Computer {
         return true;
     }
 
-    public void reset() {
-        for (int i = 0; i < ROM.length; i++) {
-            ROM[i] = null;
-        }
-
+    public void resetRegisters() {
         A = 0;
         D = 0;
         PC = 0;
@@ -141,6 +137,12 @@ public class Computer {
     public void resetRAM() {
         for (int i = 0; i < RAM.length; i++) {
             RAM[i] = 0;
+        }
+    }
+
+    public void resetROM() {
+        for (int i = 0; i < ROM.length; i++) {
+            ROM[i] = null;
         }
     }
 

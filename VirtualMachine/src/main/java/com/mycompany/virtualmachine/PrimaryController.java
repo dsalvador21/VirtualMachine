@@ -21,9 +21,12 @@ import javafx.util.converter.IntegerStringConverter;
 
 public class PrimaryController implements Initializable {
 
-    Computer computer;
-    ObservableList<InstructionRow> instructions = FXCollections.observableArrayList();
-    ObservableList<CellRow> memoryCells = FXCollections.observableArrayList();
+    private static final int ROM_SIZE = 32768;
+    private static final int RAM_SIZE = 16384;
+
+    private Computer computer;
+    private ObservableList<InstructionRow> instructions = FXCollections.observableArrayList();
+    private ObservableList<CellRow> memoryCells = FXCollections.observableArrayList();
 
     @FXML
     private Button load_file;
@@ -52,13 +55,12 @@ public class PrimaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        int ROM_SIZE = 32768;
-        int RAM_SIZE = 16384;
         computer = new Computer(ROM_SIZE, RAM_SIZE);
 
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         instructionColumn.setCellValueFactory(new PropertyValueFactory<>("instruction"));
 
+        // Llenar la tabla de la ROM con cadenas vacías.
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.add(new InstructionRow(i, ""));
         }
@@ -67,7 +69,6 @@ public class PrimaryController implements Initializable {
 
         cellColumn.setCellValueFactory(new PropertyValueFactory<>("cell"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         valueColumn.setOnEditCommit(event -> {
             CellRow cellRow = event.getRowValue();
@@ -94,7 +95,11 @@ public class PrimaryController implements Initializable {
                 new FileChooser.ExtensionFilter("Hack files", "*.hack"));
         File file = fileChooser.showOpenDialog(stage);
 
+        if (file == null)
+            return;
+
         resetComputer();
+        computer.resetROM();
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
 
@@ -120,14 +125,9 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void executeInstruction() {
+        updateRegistersVisualization();
         markLine(computer.PC);
-        PC.setText(String.valueOf(computer.PC));
-        ARegister.setText(String.valueOf(computer.A));
-        DRegister.setText(String.valueOf(computer.D));
-        memoryCells.clear();
-        for (int i = 0; i < computer.RAM.length; i++) {
-            memoryCells.add(new CellRow(i, computer.RAM[i]));
-        }
+        updateRAMVisualization(false);
         computer.executeInstruction();
     }
 
@@ -139,37 +139,49 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {}
-
-        memoryCells.clear();
-        for (int i = 0; i < computer.RAM.length; i++) {
-            memoryCells.add(new CellRow(i, computer.RAM[i]));
+        while (computer.executeInstruction()) {
         }
+
+        updateRAMVisualization(false);
+        updateRegistersVisualization();
         markLine(computer.PC);
-        PC.setText(String.valueOf(computer.PC));
-        ARegister.setText(String.valueOf(computer.A));
-        DRegister.setText(String.valueOf(computer.D));
         execute_instruction.setDisable(true);
         fast_execution.setDisable(true);
     }
 
     @FXML
     private void resetComputer() {
-        computer.reset();
-        PC.setText(String.valueOf(computer.PC));
-        ARegister.setText(String.valueOf(computer.A));
-        DRegister.setText(String.valueOf(computer.D));
-        instructionsTable.getSelectionModel().select(-1);
+        computer.resetRegisters();
+        updateRegistersVisualization();
+        instructionsTable.getSelectionModel().clearSelection();
         instructionsTable.scrollTo(0);
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
     }
 
+    private void updateRegistersVisualization() {
+        ARegister.setText(String.valueOf(computer.A));
+        DRegister.setText(String.valueOf(computer.D));
+        PC.setText(String.valueOf(computer.PC));
+    }
+
+    private void updateRAMVisualization(boolean reset) {
+        memoryCells.clear();
+
+        if (reset) {
+            for (int i = 0; i < computer.RAM.length; i++) {
+                memoryCells.add(i, new CellRow(i, 0));
+            }
+        } else {
+            for (int i = 0; i < computer.RAM.length; i++) {
+                memoryCells.add(new CellRow(i, computer.RAM[i]));
+            }
+        }
+    }
+
     @FXML
     private void resetRAM() {
-        for (int i = 0; i < computer.RAM.length; i++) {
-            computer.RAM[i] = 0;
-            memoryCells.set(i, new CellRow(i, 0));
-        }
+        computer.resetRAM();
+        updateRAMVisualization(true);
     }
 }
