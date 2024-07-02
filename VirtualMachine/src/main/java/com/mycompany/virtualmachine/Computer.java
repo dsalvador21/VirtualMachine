@@ -1,7 +1,7 @@
 package com.mycompany.virtualmachine;
 
 public class Computer {
-    
+
     String[] ROM;
     int[] RAM;
     int A, D;
@@ -122,9 +122,26 @@ public class Computer {
             A = Integer.parseInt(instruction, 2);
             PC++;
         }
-        
+
         instructionCount++;
         return true;
+    }
+
+    public void reset() {
+        for (int i = 0; i < ROM.length; i++) {
+            ROM[i] = null;
+        }
+
+        A = 0;
+        D = 0;
+        PC = 0;
+        instructionCount = 0;
+    }
+
+    public void resetRAM() {
+        for (int i = 0; i < RAM.length; i++) {
+            RAM[i] = 0;
+        }
     }
 
     private boolean charToBoolean(char c) {

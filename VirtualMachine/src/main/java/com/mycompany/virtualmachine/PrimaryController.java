@@ -3,7 +3,6 @@ package com.mycompany.virtualmachine;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import javafx.collections.FXCollections;
@@ -85,11 +84,6 @@ public class PrimaryController implements Initializable {
 
         execute_instruction.setVisible(false);
         fast_execution.setVisible(false);
-        fast_execution.setOnAction(e -> {
-            fastExecution();
-            execute_instruction.setDisable(true);
-            fast_execution.setDisable(true);
-        });
     }
 
     @FXML
@@ -97,21 +91,18 @@ public class PrimaryController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         Stage stage = App.getStage();
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Hack files", "*.hack")
-        );
+                new FileChooser.ExtensionFilter("Hack files", "*.hack"));
         File file = fileChooser.showOpenDialog(stage);
 
         resetComputer();
         execute_instruction.setDisable(false);
         fast_execution.setDisable(false);
 
-    
-         for (int i = 0; i < computer.ROM.length; i++) {
+        for (int i = 0; i < computer.ROM.length; i++) {
             instructions.set(i, new InstructionRow(i, ""));
         }
 
         instructionsTable.setItems(instructions);
-        
 
         Scanner scanner = new Scanner(file);
         int i = 0;
@@ -125,7 +116,6 @@ public class PrimaryController implements Initializable {
 
         execute_instruction.setVisible(true);
         fast_execution.setVisible(true);
-
     }
 
     @FXML
@@ -150,7 +140,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private void fastExecution() {
         while (computer.executeInstruction()) {}
-        //System.out.println(Arrays.toString(computer.RAM));
+
         memoryCells.clear();
         for (int i = 0; i < computer.RAM.length; i++) {
             memoryCells.add(new CellRow(i, computer.RAM[i]));
@@ -159,15 +149,13 @@ public class PrimaryController implements Initializable {
         PC.setText(String.valueOf(computer.PC));
         ARegister.setText(String.valueOf(computer.A));
         DRegister.setText(String.valueOf(computer.D));
-        //fast_execution.setDisable(true);
+        execute_instruction.setDisable(true);
+        fast_execution.setDisable(true);
     }
-    
+
     @FXML
     private void resetComputer() {
-        computer.A = 0;
-        computer.D = 0;
-        computer.PC = 0;
-        computer.instructionCount = 0;
+        computer.reset();
         PC.setText(String.valueOf(computer.PC));
         ARegister.setText(String.valueOf(computer.A));
         DRegister.setText(String.valueOf(computer.D));
@@ -178,7 +166,7 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void resetRAM(){
+    private void resetRAM() {
         for (int i = 0; i < computer.RAM.length; i++) {
             computer.RAM[i] = 0;
             memoryCells.set(i, new CellRow(i, 0));
