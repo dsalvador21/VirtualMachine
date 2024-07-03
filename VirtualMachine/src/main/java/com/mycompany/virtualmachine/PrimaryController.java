@@ -88,8 +88,7 @@ public class PrimaryController implements Initializable {
         memoryTable.setEditable(true);
 
         // Los botones de ejecución no son utilizables hasta que se cargue un programa.
-        execute_instruction.setDisable(true);
-        fast_execution.setDisable(true);
+        disableExecutionButtons(true);
     }
 
     @FXML
@@ -105,26 +104,30 @@ public class PrimaryController implements Initializable {
         if (file == null)
             return;
 
+        Scanner scanner = new Scanner(file);
+
         // Al cargar un nuevo programa es necesario limpiar la ROM.
         computer.resetROM();
 
+        // Cargar las nuevas instrucciones a la ROM.
+        for (int i = 0; scanner.hasNextLine(); i++) {
+            String instruction = scanner.nextLine();
+            computer.ROM[i] = instruction;
+        }
+
+        // Cargas las nuevas instrucciones a la tabla de visualización.
+        for (int i = 0; i < computer.ROM.length; i++) {
+            instructions.set(i, new InstructionRow(i, computer.ROM[i]));
+        }
+
+       /* 
         // Limpiar la tabla de la ROM.
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.set(i, new InstructionRow(i, ""));
         }
 
         instructionsTable.setItems(instructions);
-
-        Scanner scanner = new Scanner(file);
-        int i = 0;
-
-        // Cargar las nuevas instrucciones a la ROM y a la tabla de visualización.
-        while (scanner.hasNextLine()) {
-            String instruction = scanner.nextLine();
-            computer.ROM[i] = instruction;
-            instructions.set(i, new InstructionRow(i, computer.ROM[i]));
-            i++;
-        }
+        */
 
         // Reinicio de los registros y reinicio de la visualización correspondiente.
         resetComputer();
@@ -135,9 +138,9 @@ public class PrimaryController implements Initializable {
     @FXML
     private void executeInstruction() {
         computer.executeInstruction();
-        updateLine();
-        updateRAM();
         updateRegisters();
+        updateRAM();
+        updateLine();
     }
 
     // Ejecución en un paso del programa.
@@ -146,9 +149,9 @@ public class PrimaryController implements Initializable {
         while (computer.executeInstruction()) {
         }
 
-        updateLine();
-        updateRAM();
         updateRegisters();
+        updateRAM();
+        updateLine();
         // Deshabilitar botones de ejecución.
         disableExecutionButtons(true);
     }
@@ -156,8 +159,8 @@ public class PrimaryController implements Initializable {
     @FXML
     private void resetComputer() {
         computer.resetRegisters();
-        updateLine();
         updateRegisters();
+        updateLine();
         // Habilitar botones de ejecución.
         disableExecutionButtons(false);
     }
