@@ -27,7 +27,7 @@ public class Computer {
         }
 
         boolean cInstruction = charToBoolean(instruction.charAt(0)); // A or C type?
-        boolean a = charToBoolean(instruction.charAt(3)); // A or M?
+        boolean a = charToBoolean(instruction.charAt(3)); // A or M input?
         boolean c1 = charToBoolean(instruction.charAt(4));
         boolean c2 = charToBoolean(instruction.charAt(5));
         boolean c3 = charToBoolean(instruction.charAt(6));

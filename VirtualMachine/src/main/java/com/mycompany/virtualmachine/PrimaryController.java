@@ -63,7 +63,7 @@ public class PrimaryController implements Initializable {
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         instructionColumn.setCellValueFactory(new PropertyValueFactory<>("instruction"));
 
-        // Llenar la tabla de la ROM con cadenas vacías.
+        // Inicializar la tabla de la ROM con cadenas vacías.
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.add(new InstructionRow(i, ""));
         }
@@ -81,7 +81,7 @@ public class PrimaryController implements Initializable {
             computer.RAM[cellRow.getCell()] = cellRow.getValue();
         });
 
-        // Llenar la tabla de la RAM con 0's.
+        // Inicializar la tabla de la RAM con 0's.
         for (int i = 0; i < computer.RAM.length; i++) {
             memoryCells.add(new CellRow(i, 0));
         }
@@ -89,7 +89,7 @@ public class PrimaryController implements Initializable {
         memoryTable.setItems(memoryCells);
         memoryTable.setEditable(true);
 
-        // Los botones de ejecución no son utilizables hasta que se cargue un programa.
+        // Los botones de ejecución y reseteo no son utilizables hasta que se cargue un programa.
         disableExecutionButtons(true);
         reset_program.setDisable(true);
     }
