@@ -1,4 +1,7 @@
 com\mycompany\virtualmachine\App.class
 com\mycompany\virtualmachine\PrimaryController.class
 module-info.class
+com\mycompany\virtualmachine\GUIStarter.class
+com\mycompany\virtualmachine\CellRow.class
+com\mycompany\virtualmachine\InstructionRow.class
 com\mycompany\virtualmachine\Computer.class
