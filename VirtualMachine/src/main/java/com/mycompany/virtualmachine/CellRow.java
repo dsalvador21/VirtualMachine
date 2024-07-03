@@ -1,5 +1,9 @@
 package com.mycompany.virtualmachine;
 
+/*
+ * Clase para la estructura de la tabla de la RAM.
+ */
+
 public class CellRow {
 
     private int cell;

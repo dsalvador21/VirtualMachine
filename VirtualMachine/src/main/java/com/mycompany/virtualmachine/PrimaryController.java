@@ -53,6 +53,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField PC;
 
+    // Función de inicialización de la interfaz gráfica.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         computer = new Computer(ROM_SIZE, RAM_SIZE);
@@ -69,13 +70,16 @@ public class PrimaryController implements Initializable {
 
         cellColumn.setCellValueFactory(new PropertyValueFactory<>("cell"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        // Tabla con celdas editables para la RAM.
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        // Actualizar RAM del computador si se ingresa un valor a una celda.
         valueColumn.setOnEditCommit(event -> {
             CellRow cellRow = event.getRowValue();
             cellRow.setValue(event.getNewValue());
             computer.RAM[cellRow.getCell()] = event.getNewValue();
         });
 
+        // Llenar la tabla de la RAM con 0's.
         for (int i = 0; i < computer.RAM.length; i++) {
             memoryCells.add(new CellRow(i, 0));
         }
@@ -83,26 +87,29 @@ public class PrimaryController implements Initializable {
         memoryTable.setItems(memoryCells);
         memoryTable.setEditable(true);
 
-        execute_instruction.setVisible(false);
-        fast_execution.setVisible(false);
+        // Los botones de ejecución no son utilizables hasta que se cargue un programa.
+        execute_instruction.setDisable(true);
+        fast_execution.setDisable(true);
     }
 
     @FXML
     private void loadFile() throws FileNotFoundException {
+        // Cargar archivo al programa.
         FileChooser fileChooser = new FileChooser();
         Stage stage = App.getStage();
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Hack files", "*.hack"));
         File file = fileChooser.showOpenDialog(stage);
 
+        // Si no se seleccionó un archivo, salir del procedimiento.
         if (file == null)
             return;
 
-        resetComputer();
-        computer.resetROM();
-        execute_instruction.setDisable(false);
-        fast_execution.setDisable(false);
 
+        // Al cargar un nuevo programa es necesario resetear la ROM.
+        computer.resetROM();
+
+        // Limpiar la tabla de la ROM.        
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.set(i, new InstructionRow(i, ""));
         }
@@ -112,16 +119,16 @@ public class PrimaryController implements Initializable {
         Scanner scanner = new Scanner(file);
         int i = 0;
 
+        // Cargar las nuevas instrucciones a la ROM y a la tabla de visualización.
         while (scanner.hasNextLine()) {
             String instruction = scanner.nextLine();
-            computer.loadROM(i, instruction);
+            computer.ROM[i] = instruction;
             instructions.set(i, new InstructionRow(i, computer.ROM[i]));
             i++;
         }
 
-        instructionsTable.getSelectionModel().select(0);
-        execute_instruction.setVisible(true);
-        fast_execution.setVisible(true);
+        // Reinicio de los registros y la visualización de las tablas.
+        resetComputer();
     }
 
     @FXML
@@ -135,7 +142,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private void fastExecution() {
         while (computer.executeInstruction()) {}
-        
+
         updateROMVisualization(false);
         updateRAMVisualization(false);
         updateRegistersVisualization();

@@ -18,12 +18,6 @@ public class Computer {
         instructionCount = 0;
     }
 
-    public void loadROM(int cell, String instruction) {
-        if (cell >= 0 && cell < ROM.length) {
-            ROM[cell] = instruction;
-        }
-    }
-
     public boolean executeInstruction() {
         String instruction = ROM[PC];
 
