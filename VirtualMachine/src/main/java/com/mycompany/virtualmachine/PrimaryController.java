@@ -101,8 +101,7 @@ public class PrimaryController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
 
         // Si no se seleccionó un archivo, salir del procedimiento.
-        if (file == null)
-            return;
+        if (file == null) return;
 
         Scanner scanner = new Scanner(file);
 
@@ -115,19 +114,12 @@ public class PrimaryController implements Initializable {
             computer.ROM[i] = instruction;
         }
 
+        scanner.close();
+
         // Cargas las nuevas instrucciones a la tabla de visualización.
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.set(i, new InstructionRow(i, computer.ROM[i]));
         }
-
-       /* 
-        // Limpiar la tabla de la ROM.
-        for (int i = 0; i < computer.ROM.length; i++) {
-            instructions.set(i, new InstructionRow(i, ""));
-        }
-
-        instructionsTable.setItems(instructions);
-        */
 
         // Reinicio de los registros y reinicio de la visualización correspondiente.
         resetComputer();
@@ -146,8 +138,7 @@ public class PrimaryController implements Initializable {
     // Ejecución en un paso del programa.
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {
-        }
+        while (computer.executeInstruction()) {}
 
         updateRegisters();
         updateRAM();
@@ -156,6 +147,7 @@ public class PrimaryController implements Initializable {
         disableExecutionButtons(true);
     }
 
+    // Resetear ejecución de un programa o cargar nuevo programa.
     @FXML
     private void resetComputer() {
         computer.resetRegisters();
@@ -193,6 +185,7 @@ public class PrimaryController implements Initializable {
         PC.setText(String.valueOf(computer.PC));
     }
 
+    // Deshabilitar botones de ejecución.
     private void disableExecutionButtons(boolean disable) {
         if (disable) {
             execute_instruction.setDisable(true);
