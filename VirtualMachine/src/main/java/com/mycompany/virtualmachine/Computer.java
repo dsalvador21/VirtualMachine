@@ -6,8 +6,8 @@ public class Computer {
     int[] RAM;
     int A, D;
     int PC;
-    int MAX_INSTRUCTIONS = 10000;
-    int instructionCount;
+    int MAX_INSTRUCTIONS = 10000; // número máximo de instrucciones que se pueden ejecutar -> variable para evitar caer en ciclos infinitos.
+    int instructionCount; // número de instrucciones ejecutadas.
 
     public Computer(int ROM_SIZE, int RAM_SIZE) {
         ROM = new String[ROM_SIZE];
@@ -21,6 +21,7 @@ public class Computer {
     public boolean executeInstruction() {
         String instruction = ROM[PC];
 
+        // Retornar si no quedan más instrucciones o se superó el número máximo.
         if (instruction == null || instructionCount >= MAX_INSTRUCTIONS) {
             return false;
         }
@@ -134,6 +135,7 @@ public class Computer {
         }
     }
 
+    // Método para convertir de char a boolean.
     private boolean charToBoolean(char c) {
         return c != '0';
     }

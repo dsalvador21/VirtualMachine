@@ -7,6 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/*
+ * Clase para inicializar la interfaz gráfica.
+ */
+
 public class App extends Application {
 
     private static Stage stage;
@@ -28,8 +32,8 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    
-    public static Stage getStage(){
+
+    public static Stage getStage() {
         return stage;
     }
 
