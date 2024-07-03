@@ -52,6 +52,8 @@ public class PrimaryController implements Initializable {
     private TextField DRegister;
     @FXML
     private TextField PC;
+    @FXML
+    private Button reset_program;
 
     // Función de inicialización de la interfaz gráfica.
     @Override
@@ -76,7 +78,7 @@ public class PrimaryController implements Initializable {
         valueColumn.setOnEditCommit(event -> {
             CellRow cellRow = event.getRowValue();
             cellRow.setValue(event.getNewValue());
-            computer.RAM[cellRow.getCell()] = event.getNewValue();
+            computer.RAM[cellRow.getCell()] = cellRow.getValue();
         });
 
         // Llenar la tabla de la RAM con 0's.
@@ -89,6 +91,7 @@ public class PrimaryController implements Initializable {
 
         // Los botones de ejecución no son utilizables hasta que se cargue un programa.
         disableExecutionButtons(true);
+        reset_program.setDisable(true);
     }
 
     @FXML
@@ -101,7 +104,8 @@ public class PrimaryController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
 
         // Si no se seleccionó un archivo, salir del procedimiento.
-        if (file == null) return;
+        if (file == null)
+            return;
 
         Scanner scanner = new Scanner(file);
 
@@ -123,10 +127,10 @@ public class PrimaryController implements Initializable {
 
         // Reinicio de los registros y reinicio de la visualización correspondiente.
         resetComputer();
+        reset_program.setDisable(false);
     }
 
-    // Ejecución paso a paso del programa. Se ejecuta la instrucción y se visualizan
-    // los resultados.
+    // Ejecución paso a paso del programa. Se ejecuta la instrucción y se visualizan los resultados de la ejecución.
     @FXML
     private void executeInstruction() {
         computer.executeInstruction();

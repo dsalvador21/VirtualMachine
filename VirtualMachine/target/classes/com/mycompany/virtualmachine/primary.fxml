@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="731.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.virtualmachine.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="731.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.virtualmachine.PrimaryController">
    <children>
       <Button fx:id="execute_instruction" layoutX="118.0" layoutY="339.0" mnemonicParsing="false" onAction="#executeInstruction" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Execute instruction" />
       <HBox prefHeight="20.0" prefWidth="600.0">
@@ -26,7 +26,7 @@
         </columns>
       </TableView>
       <Button fx:id="fast_execution" layoutX="262.0" layoutY="339.0" mnemonicParsing="false" onAction="#fastExecution" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Fast execution" />
-      <VBox layoutX="439.0" layoutY="159.0" prefHeight="200.0" prefWidth="143.0">
+      <VBox layoutX="442.0" layoutY="120.0" prefHeight="200.0" prefWidth="143.0">
          <children>
             <Label text="A Register" textFill="#ae4351">
                <font>
@@ -72,7 +72,7 @@
             <Font name="System Bold Italic" size="53.0" />
          </font>
       </Label>
-      <Button layoutX="600.0" layoutY="558.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset Program" />
+      <Button fx:id="reset_program" layoutX="600.0" layoutY="558.0" mnemonicParsing="false" onAction="#resetComputer" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset Program" />
       <Button layoutX="600.0" layoutY="515.0" mnemonicParsing="false" onAction="#resetRAM" style="-fx-background-color: lightgray; -fx-border-color: gray;" text="Reset RAM" />
       <Label layoutX="126.0" layoutY="98.0" text="ROM" textFill="CORAL" underline="true">
          <font>
