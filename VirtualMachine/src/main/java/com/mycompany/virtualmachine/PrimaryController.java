@@ -105,11 +105,10 @@ public class PrimaryController implements Initializable {
         if (file == null)
             return;
 
-
-        // Al cargar un nuevo programa es necesario resetear la ROM.
+        // Al cargar un nuevo programa es necesario limpiar la ROM.
         computer.resetROM();
 
-        // Limpiar la tabla de la ROM.        
+        // Limpiar la tabla de la ROM.
         for (int i = 0; i < computer.ROM.length; i++) {
             instructions.set(i, new InstructionRow(i, ""));
         }
@@ -127,73 +126,78 @@ public class PrimaryController implements Initializable {
             i++;
         }
 
-        // Reinicio de los registros y la visualización de las tablas.
+        // Reinicio de los registros y reinicio de la visualización correspondiente.
         resetComputer();
     }
 
+    // Ejecución paso a paso del programa. Se ejecuta la instrucción y se visualizan
+    // los resultados.
     @FXML
     private void executeInstruction() {
         computer.executeInstruction();
-        updateROMVisualization(false);
-        updateRAMVisualization(false);
-        updateRegistersVisualization();
+        updateLine();
+        updateRAM();
+        updateRegisters();
     }
 
+    // Ejecución en un paso del programa.
     @FXML
     private void fastExecution() {
-        while (computer.executeInstruction()) {}
+        while (computer.executeInstruction()) {
+        }
 
-        updateROMVisualization(false);
-        updateRAMVisualization(false);
-        updateRegistersVisualization();
-        execute_instruction.setDisable(true);
-        fast_execution.setDisable(true);
+        updateLine();
+        updateRAM();
+        updateRegisters();
+        // Deshabilitar botones de ejecución.
+        disableExecutionButtons(true);
     }
 
     @FXML
     private void resetComputer() {
         computer.resetRegisters();
-        updateROMVisualization(true);
-        updateRegistersVisualization();
-        execute_instruction.setDisable(false);
-        fast_execution.setDisable(false);
+        updateLine();
+        updateRegisters();
+        // Habilitar botones de ejecución.
+        disableExecutionButtons(false);
     }
 
+    // Resetear los valores de la RAM.
     @FXML
     private void resetRAM() {
         computer.resetRAM();
-        updateRAMVisualization(true);
+        updateRAM();
     }
 
-    private void updateROMVisualization(boolean reset) {
+    // Actualizar la línea seleccionada.
+    private void updateLine() {
         instructionsTable.getSelectionModel().clearSelection();
+        instructionsTable.scrollTo(computer.PC);
+        instructionsTable.getSelectionModel().select(computer.PC);
+    }
 
-        if (reset) {
-            instructionsTable.scrollTo(0);
-            instructionsTable.getSelectionModel().select(0);
-        } else {
-            instructionsTable.scrollTo(computer.PC);
-            instructionsTable.getSelectionModel().select(computer.PC);
+    // Actualizar la tabla de la RAM.
+    private void updateRAM() {
+        for (int i = 0; i < computer.RAM.length; i++) {
+            memoryCells.set(i, new CellRow(i, computer.RAM[i]));
         }
     }
 
-    private void updateRAMVisualization(boolean reset) {
-        memoryCells.clear();
-
-        if (reset) {
-            for (int i = 0; i < computer.RAM.length; i++) {
-                memoryCells.add(i, new CellRow(i, 0));
-            }
-        } else {
-            for (int i = 0; i < computer.RAM.length; i++) {
-                memoryCells.add(new CellRow(i, computer.RAM[i]));
-            }
-        }
-    }
-
-    private void updateRegistersVisualization() {
+    // Actualizar los valores de los registros mostrados.
+    private void updateRegisters() {
         ARegister.setText(String.valueOf(computer.A));
         DRegister.setText(String.valueOf(computer.D));
         PC.setText(String.valueOf(computer.PC));
     }
+
+    private void disableExecutionButtons(boolean disable) {
+        if (disable) {
+            execute_instruction.setDisable(true);
+            fast_execution.setDisable(true);
+        } else {
+            execute_instruction.setDisable(false);
+            fast_execution.setDisable(false);
+        }
+    }
+
 }
